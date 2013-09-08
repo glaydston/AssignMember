@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd" version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd" id="com.ibm.faces20.portlet.FacesPortlet.0abcd0bf04">
+	<portlet>
+		<portlet-name>AssignMember</portlet-name>
+		<display-name xml:lang="pt-BR">AssignMember</display-name>
+		<display-name>AssignMember</display-name>
+		<portlet-class>com.ibm.faces20.portlet.FacesPortlet</portlet-class>
+		<init-param>
+			<name>com.ibm.faces.portlet.page.view</name>
+			<value>/AssignMemberView.xhtml</value>
+		</init-param>
+		<init-param>
+			<name>wps.markup</name>
+			<value>html</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+		<supported-locale>pt_BR</supported-locale>
+		<resource-bundle>com.ibm.assignmember.nl.AssignMemberPortletResource</resource-bundle>
+		<portlet-info>
+			<title>AssignMember</title>
+			<short-title>AssignMember</short-title>
+			<keywords>AssignMember</keywords>
+		</portlet-info>
+	</portlet>
+</portlet-app>
