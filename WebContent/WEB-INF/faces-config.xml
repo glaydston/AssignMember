@@ -39,7 +39,12 @@
 	</component>
 	<managed-bean>
 		<managed-bean-name>memberBean</managed-bean-name>
-		<managed-bean-class>pagecode.AssignMemberView</managed-bean-class>
+		<managed-bean-class>pagecode.MemberView</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>pc_ProcessEdit</managed-bean-name>
+		<managed-bean-class>pagecode.ProcessEdit</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 	<render-kit>

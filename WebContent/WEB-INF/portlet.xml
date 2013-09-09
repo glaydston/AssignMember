@@ -7,7 +7,11 @@
 		<portlet-class>com.ibm.faces20.portlet.FacesPortlet</portlet-class>
 		<init-param>
 			<name>com.ibm.faces.portlet.page.view</name>
-			<value>/AssignMemberView.xhtml</value>
+			<value>/MemberView.xhtml</value>
+		</init-param>
+		<init-param>
+			<name>com.ibm.faces.portlet.page.edit</name>
+			<value>/ProcessEdit.xhtml</value>
 		</init-param>
 		<init-param>
 			<name>wps.markup</name>
@@ -17,6 +21,7 @@
 		<supports>
 			<mime-type>text/html</mime-type>
 			<portlet-mode>view</portlet-mode>
+			<portlet-mode>edit</portlet-mode>
 		</supports>
 		<supported-locale>pt_BR</supported-locale>
 		<resource-bundle>com.ibm.assignmember.nl.AssignMemberPortletResource</resource-bundle>

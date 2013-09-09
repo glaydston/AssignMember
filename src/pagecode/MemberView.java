@@ -1,6 +1,3 @@
-/**
- * 
- */
 package pagecode;
 
 import java.util.List;
@@ -20,9 +17,9 @@ import model.Process;
  * @author Glaydston Veloso
  * @since 1.0.0
  * @date 08/09/2013
- * @mail glaydston.veloso@plansis.com.br
+ * @mail glaydston.veloso@plansis.com
  */
-public class AssignMemberView extends PageCodeBase {
+class MemberView extends PageCodeBase {
 	private List<Process> process = null;
 	private Member member = null;
 
@@ -39,11 +36,11 @@ public class AssignMemberView extends PageCodeBase {
 		if (process != null) {
 			if (member != null) {
 				Puma puma = new Puma();
-				
+
 				// Get portlet's request
 				ExternalContext context = getFacesContext().getExternalContext();
 				puma.setPortletRequest((PortletRequest) context.getRequest());
-				
+
 				// Get from LDAP the current user
 				member = puma.getCurrentUser();
 			}
