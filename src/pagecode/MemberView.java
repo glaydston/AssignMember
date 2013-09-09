@@ -36,7 +36,6 @@ class MemberView extends PageCodeBase {
 		if (process != null) {
 			if (member != null) {
 				Puma puma = new Puma();
-
 				// Get portlet's request
 				ExternalContext context = getFacesContext().getExternalContext();
 				puma.setPortletRequest((PortletRequest) context.getRequest());

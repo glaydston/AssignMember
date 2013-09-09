@@ -3,6 +3,24 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:portlet="http://java.sun.com/portlet">
 	<f:view>
+		<h:form id="frmProcess" styleClass="form">
+			<h:outputLabel 
+				value="Responsável" 
+				for="membros"
+				styleClass="outputLabel"/>
+			<h:selectOneMenu 
+				id="membros" 				
+				styleClass="selectOneMenu">
+				<f:selectItem 
+					itemLabel="Selecione um responsável: "  
+					noSelectionOption="true"/>
+				<f:selectItems 
+					value="#{processBean.members}"
+					var="member"
+					itemLabel="#{member.name}"
+					itemValue="#{member.uid}" />
+			</h:selectOneMenu>
+		</h:form>
 		<p>Place content here</p>
 	</f:view>
 </div>

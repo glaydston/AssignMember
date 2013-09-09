@@ -7,6 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.portlet.PortletRequest;
+
+import bo.Puma;
+
 import util.Messages;
 
 import model.Member;
@@ -24,7 +28,7 @@ public class MemberDao {
 
 	public MemberDao() {
 		factory = new ConnectionFactory();
-		factory.connect(lookup);
+		factory.connect(lookup);		
 	}
 
 	/**
@@ -62,7 +66,23 @@ public class MemberDao {
 
 		return message;
 	}
-
+	
+	/**
+	 * Set all members aren't in db
+	 * @param request
+	 */
+	public void setMembers(PortletRequest request){
+		Puma puma = new Puma();
+		// Get portlet's request
+		puma.setPortletRequest(request);
+		List<Member> members = puma.getAllMembers();
+		
+		for (Member m : members) 
+			if(!getIsMember(m.getName())){
+				setMember(m);
+			}
+	}
+	
 	/**
 	 * Get just member in db
 	 * 
@@ -71,24 +91,17 @@ public class MemberDao {
 	 */
 	public Member getMember(long uid) {
 		sql = new StringBuffer();
-		sql.append("SELECT uid, name, email FROM member WHERE uid = ?");
+		sql.append("SELECT uid, name, email FROM member WHERE uid = " + uid);
 
 		Member m = null;
-		// Get connection from ConnectionFactory()
-		Connection con = factory.returnConnection();
 		try {
-			// Prepare the sql to execute in ConnectionFactory
-			PreparedStatement stmt = con.prepareStatement(sql.toString());
-			stmt.setLong(1, uid);
-
-			ResultSet rs = factory.executeQuery(stmt);
+			ResultSet rs = factory.executeQuery(sql);
 
 			m = new Member();
 			m.setUid(rs.getLong("uid"));
 			m.setName(rs.getString("name"));
 			m.setEmail(rs.getString("email"));
-
-			stmt.close();
+			
 			rs.close();
 
 		} catch (SQLException e) {
@@ -100,6 +113,38 @@ public class MemberDao {
 		}
 		return m;
 
+	}
+	
+	/**
+	 * Get just member in db
+	 * 
+	 * @param uid
+	 * @return Member
+	 */
+	public Member getMember(String name) {
+		sql = new StringBuffer();
+		sql.append("SELECT uid, name, email FROM member WHERE name = " + name);
+
+		Member m = null;
+		try {
+
+			ResultSet rs = factory.executeQuery(sql);
+			
+			m = new Member();
+			m.setUid(rs.getLong("uid"));
+			m.setName(rs.getString("name"));
+			m.setEmail(rs.getString("email"));
+			
+			rs.close();
+
+		} catch (SQLException e) {
+			System.out.println("-> ConnectionFactory() > SQLException caught: " + e.getMessage());
+		} catch (Exception e) {
+			System.out.println("-> ConnectionFactory() > Exception caught: " + e.getMessage());
+		} finally {
+			factory.closeConnection();
+		}
+		return m;
 	}
 
 	/**
@@ -134,5 +179,55 @@ public class MemberDao {
 			factory.closeConnection();
 		}
 		return members;
+	}
+	
+	/**
+	 * See if member is in db
+	 * 
+	 * @param name
+	 * @return boolean
+	 */
+	public boolean getIsMember(long uid) {
+		sql = new StringBuffer();
+		sql.append("SELECT uid, name, email FROM member WHERE uid = " + uid);
+
+		try {
+
+			ResultSet rs = factory.executeQuery(sql);			
+			return rs.next();
+
+		} catch (SQLException e) {
+			System.out.println("-> ConnectionFactory() > SQLException caught: " + e.getMessage());
+		} catch (Exception e) {
+			System.out.println("-> ConnectionFactory() > Exception caught: " + e.getMessage());
+		} finally {
+			factory.closeConnection();
+		}
+		return false;
+	}
+	
+	/**
+	 * See if member is in db
+	 * 
+	 * @param name
+	 * @return boolean
+	 */
+	public boolean getIsMember(String name) {
+		sql = new StringBuffer();
+		sql.append("SELECT uid, name, email FROM member WHERE name = " + name);
+
+		try {
+
+			ResultSet rs = factory.executeQuery(sql);			
+			return rs.next();
+
+		} catch (SQLException e) {
+			System.out.println("-> ConnectionFactory() > SQLException caught: " + e.getMessage());
+		} catch (Exception e) {
+			System.out.println("-> ConnectionFactory() > Exception caught: " + e.getMessage());
+		} finally {
+			factory.closeConnection();
+		}
+		return false;
 	}
 }
