@@ -64,9 +64,45 @@ public class ProcessDao {
 
 		return message;
 	}
-	
 	/**
 	 * Get all process in db
+	 * @param name
+	 * @return List<Process>
+	 */
+	public List<Process> getProcess() {
+		sql = new StringBuffer();
+
+		sql.append("SELECT uid, name, description, member FROM process");
+		
+		List<Process> process = new ArrayList<Process>();
+		try {
+			Process p = null;
+			ResultSet rs = factory.executeQuery(sql);
+			while (rs.next()) {
+				p = new Process();				
+				
+				p.setUid(rs.getLong("uid"));
+				p.setName(rs.getString("name"));	
+				p.setDescription(rs.getString("description"));					
+				p.setMember(new MemberDao().getMember(rs.getLong("member")));
+				
+				process.add(p);
+			}
+
+			rs.close();
+
+		} catch (SQLException e) {
+			System.out.println("-> ConnectionFactory() > SQLException caught: " + e.getMessage());
+		} catch (Exception e) {
+			System.out.println("-> ConnectionFactory() > Exception caught: " + e.getMessage());
+		} finally {
+			factory.closeConnection();
+		}
+		return process;
+	}
+	
+	/**
+	 * Get all process from member in db
 	 * @param name
 	 * @return List<Process>
 	 */
@@ -110,7 +146,7 @@ public class ProcessDao {
 	}
 	
 	/**
-	 * Get all process in db
+	 * Get all process from member in db
 	 * @param m
 	 * @return List<Process>
 	 */

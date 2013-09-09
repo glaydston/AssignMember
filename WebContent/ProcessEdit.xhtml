@@ -4,24 +4,80 @@
 	xmlns:portlet="http://java.sun.com/portlet">
 	<f:view>
 		<h:form id="frmProcess" styleClass="form">
-			<h:outputLabel 
-				value="Responsável" 
-				for="membros"
-				styleClass="outputLabel"/>
-			<h:selectOneMenu 
-				id="membros" 				
-				styleClass="selectOneMenu">
-				<f:selectItem 
-					itemLabel="Selecione um responsável: "  
-					noSelectionOption="true"/>
-				<f:selectItems 
-					value="#{processBean.members}"
-					var="member"
-					itemLabel="#{member.name}"
-					itemValue="#{member.uid}" />
-			</h:selectOneMenu>
+			<h:panelGrid columns="2">
+				<h:outputLabel 
+					value="Responsável: " 
+					for="membros"
+					styleClass="outputLabel"/>
+				<h:panelGroup>	
+					<h:selectOneMenu 
+						id="membros" 				
+						styleClass="selectOneMenu">
+						<f:selectItem 
+							itemLabel="Selecione um responsável: "  
+							noSelectionOption="true"/>
+						<f:selectItems 
+							value="#{processBean.members}"
+							var="member"
+							itemLabel="#{member.name}"
+							itemValue="#{member.uid}" />
+					</h:selectOneMenu>
+					<h:message for="membros"/>
+				</h:panelGroup>
+				
+				<h:outputLabel 
+					value="Processo: "
+					for="processo"
+					styleClass="outputLabel" />
+				<h:panelGroup>
+					<h:inputText
+						id="processo"
+						label="Processo"
+						value="#{processBean.process.name}" 
+						required="true">
+						<f:validateLongRange minimum="3" maximum="255"/>
+					</h:inputText>
+					<h:message for="processo"/>
+				</h:panelGroup>
+				
+				<h:outputLabel 
+					value="Descrição:  "
+					for="descricao"
+					styleClass="outputLabel" />
+				<h:panelGroup>	
+					<h:inputText
+						id="descricao"
+						label="Descrição"
+						value="#{processBean.process.description}" 
+						required="true">
+						<f:validateLongRange minimum="3" maximum="255"/>
+					</h:inputText>
+					<h:message for="descricao"/>
+				</h:panelGroup>
+			
+				<h:commandButton 
+					value="Adicionar" 
+					actionListener="#{processBean.addProcess}"/>
+				<h:commandButton 
+					type="reset"
+					value="Limpar"/>
+			</h:panelGrid>
+			
 		</h:form>
-		<p>Place content here</p>
+		<br />
+		<h:panelGroup rendered="#{not empty processBean.listProcess}">
+			<h1>Lista de Processo(s)</h1>
+			<ul>
+				<ui:repeat value="#{processBean.listProcess}" var="process">				
+					<li>
+						<h:outputFormat value="Processo: {0}, Responsável: {1}">
+							<f:param value="#{process.name}"/>
+							<f:param value="#{process.member.name}"/>
+						</h:outputFormat>
+					</li>
+				</ui:repeat>
+			</ul>
+		</h:panelGroup> 
 	</f:view>
 </div>
 <!-- jsf:pagecode language="java" location="/src/pagecode/ProcessEdit.java" --><!-- /jsf:pagecode -->
